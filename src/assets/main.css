@@ -6,3 +6,11 @@
     font-family: "baloo";
     src: url("../assets/fonts/static/BalooTammudu2-Regular.ttf");
 }
+@font-face {
+    font-family: "lato-bold";
+    src: url("../assets/fonts/Lato-Black.ttf");
+}
+@font-face {
+    font-family: "lato";
+    src: url("../assets/fonts/Lato-Regular.ttf");
+}
