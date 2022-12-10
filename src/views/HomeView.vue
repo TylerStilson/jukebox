@@ -12,7 +12,7 @@
           height="419"
           class="ml-5 my-4 px-6 py-6 rounded-xl d-flex flex-column align-center"
           :elevation="6"
-          @click="test(song)"
+          @click="playSong(song)"
         >
           <v-img :src="song.cover" height="256" width="256" class="rounded-lg">
           </v-img>
@@ -42,73 +42,85 @@ export default {
           SongName: "Dancing Queen",
           Artist: "ABBA",
           cover: require("../assets/images/abba.jpeg"),
-          fileName: "dancingQueen.mp3",
+          fileName: "danceq.mp3",
+          pathName: "dancingQueen"
         },
         {
           SongName: "Mamma Mia",
           Artist: "ABBA",
-          cover: require("../assets/images/mamma-mia.jpeg"),
-          fileName: "mammaMia.mp3",
+          cover: require("../assets/images/mammamia.jpeg"),
+          fileName: "mammamia.mp3",
+          pathName: "mammaMia"
         },
         {
           SongName: "ABC",
           Artist: "The Jackson 5",
           cover: require("../assets/images/j5-abc.jpeg"),
-          fileName: "abc.mp3",
+          fileName: "ABC.mp3",
+          pathName: "abc"
         },
         {
           SongName: "Mr. Blue Sky",
           Artist: "Electric Light Orchestra",
-          cover: require("../assets/images/mr-blue-sky.jpg"),
-          fileName: "blueSky.mp3",
+          cover: require("../assets/images/mrbluesky.jpg"),
+          fileName: "bluesky.mp3",
+          pathName: "mrBlueSky"
         },
         {
           SongName: "I Want You Back",
           Artist: "The Jackson 5",
-          cover: require("../assets/images/want-you-back.jpeg"),
-          fileName: "wantYouBack.mp3",
+          cover: require("../assets/images/wantuback.jpeg"),
+          fileName: "wantubak.mp3",
+          pathName: "wantYouBack"
         },
         {
           SongName: "Hooked On A Feeling",
           Artist: "Blue Swede, Bjorn Skifs",
-          cover: require("../assets/images/hooked-on-a-feeling.jpeg"),
-          fileName: "hookedOnAFeeling.mp3",
+          cover: require("../assets/images/hookedon.jpeg"),
+          fileName: "hookedon.mp3",
+          pathName: "hookedOnAFeeling"
         },
         {
           SongName: "Spirit in the Sky",
           Artist: "Norman Greenbaum",
-          cover: require("../assets/images/spirit-in-the-sky.jpeg"),
-          fileName: "spiritInTheSky.mp3",
+          cover: require("../assets/images/spiritinsky.jpeg"),
+          fileName: "spiritin.mp3",
+          pathName: "spiritInTheSky"
         },
         {
           SongName: "Aint No Mountain High Enough",
           Artist: "Marvin Gaye, Tammi Terrell",
-          cover: require("../assets/images/aint-no-mountain.jpeg"),
-          fileName: "mountain.mp3",
+          cover: require("../assets/images/aint-no.jpeg"),
+          fileName: "aintno.mp3",
+          pathName: "aintNoMountain"
         },
         {
           SongName: "Come And Get Your Love",
           Artist: "Redbone",
-          cover: require("../assets/images/come-and-get-your-love.jpeg"),
-          fileName: "yourLove.mp3",
+          cover: require("../assets/images/geturluv.jpeg"),
+          fileName: "geturluv.mp3",
+          pathName: "comeAndGetYourLove"
         },
         {
           SongName: "Escape (The Pina Colada Song)",
           Artist: "Rupert Holmes",
           cover: require("../assets/images/escape.jpeg"),
           fileName: "escape.mp3",
+          pathName: "escapePinaColada"
         },
         {
           SongName: "O-o-h Child",
           Artist: "The Five Stairsteps",
-          cover: require("../assets/images/ooh-child.jpeg"),
-          fileName: "oohChild.mp3",
+          cover: require("../assets/images/oohchild.jpeg"),
+          fileName: "ohchild.mp3",
+          pathName: "oohChild"
         },
         {
           SongName: "The Boys Are Back In Town",
           Artist: "Thin Lizzy",
-          cover: require("../assets/images/the-boys-are-back-in-town.jpeg"),
-          fileName: "boysBack.mp3",
+          cover: require("../assets/images/boysareback.jpeg"),
+          fileName: "boysrbak.mp3",
+          pathName: "theBoysAreBackInTown"
         },
       ],
       song: {},
@@ -121,9 +133,17 @@ export default {
     redirect(x) {
       this.$router.push(`/${x}`);
     },
-    test: function (song) {
+    playSong: function (song) {
       this.song = song;
       console.log(this.song);
+      var data = 'song=' + encodeURIComponent(song.fileName);
+    fetch('http://192.168.4.1/song', {
+    method: 'POST',
+    body: data,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+  });
     },
   },
 };

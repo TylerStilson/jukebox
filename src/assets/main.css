@@ -1,10 +1,10 @@
 @font-face {
     font-family: "baloo-bold";
-    src: url("../assets/fonts/static/BalooTammudu2-ExtraBold.ttf");
+    src: url("../assets/fonts/static/BalooXtraB.ttf");
 }
 @font-face {
     font-family: "baloo";
-    src: url("../assets/fonts/static/BalooTammudu2-Regular.ttf");
+    src: url("../assets/fonts/static/BalooReg.ttf");
 }
 @font-face {
     font-family: "lato-bold";
