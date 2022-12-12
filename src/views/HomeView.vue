@@ -3,7 +3,7 @@
     <h1>Jukebox</h1>
     <div id="nav-menu">
       <h2>All Songs</h2>
-      <h2 id="unactive" @click="redirect('/playlists')">Playlists</h2>
+      <h2 id="unactive" @click="redirect('playlists')">Playlists</h2>
     </div>
     <v-slide-group class="carousel">
       <v-slide-item v-for="(song, index) in songs" :key="index">
@@ -22,6 +22,9 @@
             </div>
             <div class="artist-name">
               {{ song.Artist }}
+            </div>
+            <div v-if="playingIndex == index" id="center">
+              <img src="../assets/images/sound.svg" alt="">
             </div>
             <!-- cover: {{ song.cover }} -->
           </v-card-text>
@@ -124,6 +127,7 @@ export default {
         },
       ],
       song: {},
+      playingIndex: null
     };
   },
   created() {
@@ -134,22 +138,31 @@ export default {
       this.$router.push(`/${x}`);
     },
     playSong: function (song) {
+      for ( var i in this.songs){
+        if (this.songs[i].fileName == song.fileName){
+          this.playingIndex = i;
+          console.log("songIndex: ", this.playingIndex);
+        }
+      }
       this.song = song;
-      console.log(this.song);
+      console.log("song=",this.song);
       var data = 'song=' + encodeURIComponent(song.fileName);
-    fetch('http://192.168.4.1/song', {
-    method: 'POST',
-    body: data,
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
-    }
-  });
+      fetch('http://192.168.4.1/song', {
+        method: 'POST',
+        body: data,
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      });
     },
   },
 };
 </script>
 
 <style scoped>
+#center{
+  text-align: center;
+}
 #background {
   background-image: url("../assets/images/background.svg");
   width: 100vw;
@@ -159,7 +172,7 @@ export default {
 h1 {
   font-family: "baloo-bold";
   color: white;
-  font-size: 200px;
+  font-size: 140px;
   width: 100%;
   text-align: center;
   padding-top: 2%;
@@ -187,5 +200,30 @@ h2 {
 .artist-name {
   font-size: 18px;
   text-align: center;
+}
+.carousel{
+  width: 85%;
+  padding-left: 15%;
+}
+@media (max-width: 425px){
+  #background {
+    background-image: url("../assets/images/mobile-back.svg");
+    width: 169%;
+    height: 1200px;
+    background-size: cover;
+  }
+  h1{
+    font-size: 100px;
+  }
+  h2{
+    font-size: 18px;
+  }
+  #nav-menu{
+    margin: 0px 30%;
+  }
+  .carousel{
+    margin-top: 50px;
+  }
+
 }
 </style>
