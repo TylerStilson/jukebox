@@ -151,6 +151,7 @@ export default {
           console.log("songIndex: ", this.playingIndex);
         }
       }
+      this.songState = 'play';
       this.song = song;
       console.log("song=",this.song);
       var data = 'song=' + encodeURIComponent(song.fileName);

@@ -271,6 +271,7 @@
         this.playlistIndex = index;
         console.log("playistINdex: ", this.playlistIndex);
         var song = this.diaSongs[index].fileName;
+        this.songState = 'play';
 
         var data = 'song=' + encodeURIComponent(song);
         fetch('http://192.168.4.1/song', {
