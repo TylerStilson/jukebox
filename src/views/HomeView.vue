@@ -12,9 +12,9 @@
           height="419"
           class="ml-5 my-4 px-6 py-6 rounded-xl d-flex flex-column align-center"
           :elevation="6"
-          @click="playSong(song)"
+          
         >
-          <v-img :src="song.cover" height="256" width="256" class="rounded-lg">
+          <v-img :src="song.cover" height="256" width="256" class="rounded-lg" @click="playSong(song)">
           </v-img>
           <v-card-text width="128" class="title" color="">
             <div class="song-title">
@@ -24,7 +24,13 @@
               {{ song.Artist }}
             </div>
             <div v-if="playingIndex == index" id="center">
-              <img src="../assets/images/sound.svg" alt="">
+              <!-- <img src="../assets/images/sound.svg" alt=""> -->
+              <div v-if="songState == 'play'">
+                <img src="../assets/images/pause.svg" alt="" @click="pauseSong()">
+              </div>
+              <div v-if="songState == 'pause'">
+                <img src="../assets/images/play.svg" alt="" @click="resumeSong()">
+              </div>
             </div>
             <!-- cover: {{ song.cover }} -->
           </v-card-text>
@@ -127,7 +133,8 @@ export default {
         },
       ],
       song: {},
-      playingIndex: null
+      playingIndex: null,
+      songState: 'play'
     };
   },
   created() {
@@ -155,6 +162,28 @@ export default {
         }
       });
     },
+    pauseSong(){
+      this.songState = 'pause';
+      var data = 'pause=' + encodeURIComponent(this.songState);
+      fetch('http://192.168.4.1/pause', {
+        method: 'POST',
+        body: data,
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      });
+    },
+    resumeSong(){
+      this.songState = 'play';
+      var data = 'play=' + encodeURIComponent(this.songState);
+      fetch('http://192.168.4.1/play', {
+        method: 'POST',
+        body: data,
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      });
+    }
   },
 };
 </script>

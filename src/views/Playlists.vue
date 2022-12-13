@@ -33,7 +33,13 @@
               <h6>{{diaSongs[index].Artist}}</h6>
             </div>
             <div v-if="(playlistIndex == index)" class="addicon">
-              <img src="../assets/images/sound.svg" alt="">
+              <!-- <img src="../assets/images/sound.svg" alt=""> -->
+              <div v-if="songState == 'play'">
+                <img src="../assets/images/pause.svg" alt="" @click="pauseSong()">
+              </div>
+              <div v-if="songState == 'pause'">
+                <img src="../assets/images/play.svg" alt="" @click="resumeSong()">
+              </div>
             </div>
           </div>
           <v-divider class="newdiv"></v-divider>
@@ -48,7 +54,7 @@
       id="fab-btn"
       @click="createNew()"
       >
-      <v-icon id="fab-icon">mdi-plus</v-icon>
+      <img id="fab-icon" src="../assets/images/plus.svg">
     </v-btn>
 
     <v-dialog
@@ -201,7 +207,8 @@
         diaName: '',
         diaDesc: '',
         diaSongs: [],
-        playlistIndex: null
+        playlistIndex: null,
+        songState: 'play'
 
       }
     },
@@ -267,6 +274,28 @@
 
         var data = 'song=' + encodeURIComponent(song);
         fetch('http://192.168.4.1/song', {
+          method: 'POST',
+          body: data,
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          }
+        });
+      },
+      pauseSong(){
+        this.songState = 'pause';
+        var data = 'pause=' + encodeURIComponent(this.songState);
+        fetch('http://192.168.4.1/pause', {
+          method: 'POST',
+          body: data,
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          }
+        });
+      },
+      resumeSong(){
+        this.songState = 'play';
+        var data = 'play=' + encodeURIComponent(this.songState);
+        fetch('http://192.168.4.1/play', {
           method: 'POST',
           body: data,
           headers: {
@@ -357,9 +386,9 @@ h4{
   height: 100px;
 }
 #fab-icon{
-  width: 75px;
-  height: 75px;
-  font-size: 75px;
+  width: 50px;
+  height: 50px;
+  font-size: 50px;
 }
 #newHead{
   font-family: 'lato-bold';
